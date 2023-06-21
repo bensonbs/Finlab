@@ -1,0 +1,8 @@
+finlab
+streamlit
+plotly
+PyYaml
+openai
+lxml
+IPython
+stqdm

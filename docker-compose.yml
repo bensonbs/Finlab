@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  jupyter:
+    image:  finlab:1.0.1
+    container_name: leeklab
+    ports:
+      - 3001:3001
+      - 8501:8501
+      - 8502:8502
+      - 8888:8888
+      - 5000:5000
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      

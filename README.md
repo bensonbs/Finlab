@@ -1,2 +1,1 @@
 # Finlab
-Finlab
