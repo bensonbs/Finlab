@@ -1,3 +1,6 @@
+import requests
+from lxml import html
+
 def cnyes_tags(stock_number):
 
     url = f"https://www.cnyes.com/twstock/{stock_number}/relation/overview"

@@ -88,8 +88,15 @@ def institutional_chart (selected, df):
 
 
 def metric (selected, df):
-    price = df['close_price'].loc[prev_day(1)][selected]
-    price_1 = df['close_price'].loc[prev_day(2)][selected]
+    for i in range(1,15):
+        try:
+            price = df['close_price'].loc[prev_day(i)][selected]
+            day = i
+            break
+        except:
+            continue
+    price = df['close_price'].loc[prev_day(day)][selected]
+    price_1 = df['close_price'].loc[prev_day(day+1)][selected]
     delta = price - price_1
     delta_persent = (price-price_1)/price_1*100
     st.metric(label=selected, value=price, delta=f'{delta:.2f} ({delta_persent:.2f}%)',delta_color="inverse")

@@ -1,11 +1,26 @@
 import os
+import json
 import pickle
 import finlab
+import pandas as pd
 from stqdm import stqdm
-from utils.utils import *
+from datetime import datetime
+ROOT = os.path.expanduser("~")
+with open(os.path.join(ROOT,'Finlab','name_dic.json'), 'r') as f:
+    name_dic = json.load(f)
+
+def update_check(filename):
+    today = datetime.now().date().strftime('%Y-%m-%d')
+    modified = datetime.fromtimestamp(os.path.getmtime(filename)).date().strftime('%Y-%m-%d') if os.path.exists(filename) else None
+    return modified == today if modified else False
+
+def prev_day(n):
+    data = get_data()
+    day = data['close_price'].index[-n]
+    return day.strftime('%Y-%m-%d')
 
 def get_data(days=None):
-    finlab.login(config["finlab_api_key"])
+    finlab.login(os.environ['FINLAB_API_KEY'])
     data_get_dict = {
         'open_price': 'price:開盤價',
         'high_price': 'price:最高價',

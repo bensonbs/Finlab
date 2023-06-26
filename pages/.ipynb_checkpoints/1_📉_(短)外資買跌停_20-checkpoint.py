@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from utils.plot import *
-from utils.utils import *
 from utils.FinLab import get_data
 from utils.FinReport import *
 from utils.WebScrapying import *
@@ -57,6 +56,6 @@ for selected in selecteds:
                 temp_area.write(report_analyze(selected))
 
         with tab[3]:
-            industry, concept = cnyes(selected)
+            industry, concept = cnyes_tags(selected)
             st.markdown(f'{industry}')
             st.markdown(f'{concept}')
