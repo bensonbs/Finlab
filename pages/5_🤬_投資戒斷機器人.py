@@ -52,6 +52,7 @@ model = "gpt-3.5-turbo" if model_name == "GPT-3.5" else "gpt-4"
 
 # generate a response
 def generate_response(prompt):
+    container.empty()
     st.session_state['messages'].append({"role": "user", "content": prompt})
     completion = openai.ChatCompletion.create(
         model=model,
@@ -85,7 +86,7 @@ container = st.container()
 with container:
     with st.form(key='my_form', clear_on_submit=True):
         user_input = st.text_area("You:", key='input', height=100)
-        submit_button = st.form_submit_button(label='Send')
+        submit_button = st.form_submit_button(label='Send',type='primary')
 
     if submit_button and user_input:
         output, total_tokens, prompt_tokens, completion_tokens = generate_response('聽到我說‘請開始”後使用非常尖酸刻薄的語氣搭配鄙視的用語來簡短回答使用者的問題。請開始，使用者：'+ user_input)

@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from utils.utils import prev_day
+from utils.FinLab import prev_day
 
 def k_chart(selected, df):
     df_selected = pd.DataFrame({

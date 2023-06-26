@@ -1,6 +1,9 @@
+import os
+import openai
+
 def chat_gpt(prompt):
     
-    openai.api_key = config["openai_api_key"]
+    openai.api_key = os.environ['OPENAI_API_KEY']
     
     response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",

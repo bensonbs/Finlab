@@ -20,4 +20,4 @@ RUN git clone https://github.com/bensonbs/Finlab ${HOME}/Finlab && \
 EXPOSE 8888
 
 # The command to run when this image starts up:
-CMD ["bash", "-c", "streamlit run ${HOME}/Finlab/main.py & jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.password=$NB_PASS"]
+CMD ["bash", "-c", "streamlit run ${HOME}/Finlab/main.py & jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.password=$NB_PASS --ServerApp.disable_check_xsrf=True"]

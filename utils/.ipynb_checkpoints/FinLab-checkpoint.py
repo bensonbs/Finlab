@@ -3,6 +3,7 @@ import json
 import pickle
 import finlab
 import pandas as pd
+import streamlit as st
 from stqdm import stqdm
 from datetime import datetime
 ROOT = os.path.expanduser("~")
@@ -50,7 +51,7 @@ def get_data(days=None):
         ar = st.empty()
         data = {}
         for key, value in stqdm(data_get_dict.items()):
-            data[key] = finlab.data.get(value)
+            data[key] = finlab.data.get(value).iloc[-600:]
             ar.info(f'正在下載{key}')
             with open(pkl_name, 'wb') as f:
                 pickle.dump(data, f)

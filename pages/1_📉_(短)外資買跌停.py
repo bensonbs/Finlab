@@ -50,7 +50,7 @@ for selected in selecteds:
         with tab[2]:
             p = report_plot(selected)
             st.plotly_chart(p,use_container_width=True)
-            if st.button('AI 分析',type='primary',key=f'button {selected}'):
+            with st.expander('😀 AI分析', expanded=False):
                 temp_area = st.empty()
                 temp_area.info('財報分析中')
                 temp_area.write(report_analyze(selected))

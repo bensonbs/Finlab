@@ -5,8 +5,8 @@ import finlab
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from utils.utils import *
 from utils.FinLab import *
+from utils.chatgpt import *
 from stqdm import stqdm
 
 ROOT = os.path.expanduser("~")
@@ -33,7 +33,7 @@ def get_report():
         pkl_name = os.path.join(ROOT,'Finlab','temp','FinReport.pkl')
         if not update_check(pkl_name):
 
-            finlab.login(config["finlab_api_key"])
+            finlab.login(os.environ['FINLAB_API_KEY'])
             data = {
                 'Operating Income': finlab.data.get('fundamental_features:營業利益'),
                 'EBITDA': finlab.data.get('fundamental_features:EBITDA'),
@@ -79,7 +79,7 @@ def report_analyze(stock_number):
     
         # Otherwise, generate a new response
         json_df = df.iloc[-8:].to_json()
-        prompt = f'''請用正體中文在100字內總結該公司財報，並分析其成長性、安全性與獲利能力 {json_df}'''
+        prompt = f'''請用正體中文在100字內總結該公司財報，並以股票購買者的角度分析其股價成長性、波動性與獲利能力 {json_df}'''
     
         # This is just a placeholder for the actual call to chat_gpt
         # As an AI model developed by OpenAI, I don't have the ability to call a function like this
