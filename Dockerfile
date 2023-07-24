@@ -15,6 +15,8 @@ ENV OPENAI_API_KEY ""
 RUN git clone https://github.com/bensonbs/Finlab ${HOME}/Finlab && \
     pip3 install -r ${HOME}/Finlab/requirement.txt && \
     pip3 install jupyterlab
+RUN apt-get update && apt-get install -y opencc
+
 
 # Jupyter will run on port 8888, expose this port
 EXPOSE 8888

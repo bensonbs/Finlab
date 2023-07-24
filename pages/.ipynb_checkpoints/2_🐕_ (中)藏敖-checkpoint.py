@@ -13,6 +13,7 @@ from utils.WebScrapying import *
 ROOT = os.path.expanduser("~")
 
 with st.sidebar:
+    st.image('home/jovyan/Finlab/nature-ecology-cat-2.png')
     st.markdown('### 投資策略')
     st.markdown('''動能策略，押寶股價領先營收突破，大多頭會打出兇悍的一波流，勝率一半一半，但勝手常持有後一去不回，回檔小。因此停損設8%，偏低位置，保留多數獲利部位與下檔波動，遇到中期回檔也砍得快。
     開盤價進出，月底換股，押寶下月營收公布利多。
@@ -51,19 +52,23 @@ for selected in selecteds:
         p = institutional_chart(selected, df)
         st.plotly_chart(p,use_container_width=True)
 
+data.index = data.iloc[:,1]
+data = data.iloc[:,2:]
 styled_data = data.style.apply(highlight_color, axis=1).format("{:.2f}", subset=['買入', '現價', '停損', '損益'])
 area.dataframe(styled_data, use_container_width=True)
 
 for selected,tab in zip(selecteds,tab_list):
     with tab[2]:
-        p = report_plot(selected)
-        st.plotly_chart(p,use_container_width=True)
-        with st.expander('😀 AI分析', expanded=False):
-            temp_area = st.empty()
-            temp_area.info('財報分析中')
-            temp_area.write(report_analyze(selected))
+        if selected != '00632R':
+            p = report_plot(selected)
+            st.plotly_chart(p,use_container_width=True)
+            with st.expander('😀 AI分析', expanded=False):
+                temp_area = st.empty()
+                temp_area.info('財報分析中')
+                temp_area.write(report_analyze(selected))
 
     with tab[3]:
-        industry, concept = cnyes_tags(selected)
-        st.markdown(f'{industry}')
-        st.markdown(f'{concept}')
+        if selected != '00632R':
+            industry, concept = cnyes_tags(selected)
+            st.markdown(f'{industry}')
+            st.markdown(f'{concept}')

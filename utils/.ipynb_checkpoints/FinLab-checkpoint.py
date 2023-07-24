@@ -5,21 +5,22 @@ import finlab
 import pandas as pd
 import streamlit as st
 from stqdm import stqdm
-from datetime import datetime
+from datetime import datetime,timedelta
 ROOT = os.path.expanduser("~")
 with open(os.path.join(ROOT,'Finlab','name_dic.json'), 'r') as f:
     name_dic = json.load(f)
 
 def update_check(filename):
-    today = datetime.now().date().strftime('%Y-%m-%d')
-    modified = datetime.fromtimestamp(os.path.getmtime(filename)).date().strftime('%Y-%m-%d') if os.path.exists(filename) else None
+    today = (datetime.now() + timedelta(hours = 8)).date().strftime('%Y-%m-%d')
+    modified = (datetime.fromtimestamp(os.path.getmtime(filename))+ timedelta(hours = 8)).date().strftime('%Y-%m-%d') if os.path.exists(filename) else None
     return modified == today if modified else False
 
 def prev_day(n):
     data = get_data()
     day = data['close_price'].index[-n]
     return day.strftime('%Y-%m-%d')
-
+    
+@st.cache_data
 def get_data(days=None):
     finlab.login(os.environ['FINLAB_API_KEY'])
     data_get_dict = {
@@ -51,7 +52,7 @@ def get_data(days=None):
         ar = st.empty()
         data = {}
         for key, value in stqdm(data_get_dict.items()):
-            data[key] = finlab.data.get(value).iloc[-600:]
+            data[key] = finlab.data.get(value).iloc[-300:]
             ar.info(f'正在下載{key}')
             with open(pkl_name, 'wb') as f:
                 pickle.dump(data, f)
@@ -94,7 +95,7 @@ def Mastiff():
     cond5 = (rev_month_growth > -40).sustain(3)
     
     # 流動性條件
-    cond6 = vol_ma > 200*1000
+    cond6 = vol_ma > 500*1000
 
     # 流動性條件
     cond7 = close < 100

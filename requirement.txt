@@ -6,3 +6,5 @@ openai
 lxml
 IPython
 stqdm
+opencc
+streamlit-authenticator

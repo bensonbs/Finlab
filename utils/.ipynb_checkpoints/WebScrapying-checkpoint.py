@@ -29,3 +29,15 @@ def cnyes_tags(stock_number):
             concept = concept + f'`{element.text}` '
 
     return industry, concept
+
+def cnyes_price(stock_number):
+    # 獲取網頁內容
+    url = f'https://www.cnyes.com/twstock/{stock_number}/analysis/performance'
+    response = requests.get(url)
+    
+    # 解析網頁內容
+    tree = html.fromstring(response.content)
+    
+    # 使用XPath選擇元素
+    real_time_price = tree.xpath('//*[@id="anue-ga-wrapper"]/div[4]/div[2]/div[1]/div[1]/div[1]/div/div[2]/div[2]/div/h3/text()')[0]
+    return float(real_time_price)

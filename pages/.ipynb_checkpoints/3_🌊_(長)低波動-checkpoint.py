@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from utils.plot import *
-from utils.utils import *
 from utils.FinLab import *
 from utils.FinReport import *
 from utils.WebScrapying import *
@@ -49,6 +48,8 @@ for selected in selecteds:
         p = institutional_chart(selected, df)
         st.plotly_chart(p,use_container_width=True)
 
+data.index = data.iloc[:,1]
+data = data.iloc[:,2:]
 styled_data = data.style.apply(highlight_color, axis=1).format("{:.2f}", subset=['買入', '現價', '停損', '損益'])
 area.dataframe(styled_data, use_container_width=True)
 
